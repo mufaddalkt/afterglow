@@ -2,9 +2,9 @@
 
 An original, complete browser arcade race on a 2.61 km sunset harbor circuit.
 
-**Play:** https://afterglow-rush.vercel.app/
+**Play:** https://asphaltglow.vercel.app/
 
-Open **AFTERGLOW-RUSH.html** in a modern browser to play offline. It contains the complete game and needs no installation or network access. For the hosted version, use the Vercel link supplied in the chat.
+Open **AFTERGLOW-RUSH.html** in a modern browser to play offline. It contains the complete game and needs no installation or network access. For the hosted version, use the Vercel link above.
 
 ## Controls
 
