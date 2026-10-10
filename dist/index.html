@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0c121d">
+  <meta name="description" content="Afterglow Rush. An original cinematic arcade race through the neon harbor. Get behind the wheel, find your line, and chase the light.">
+  <title>AFTERGLOW RUSH — Chase the light.</title>
+  <link rel="stylesheet" href="./style.css">
+  <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js"}}</script>
+</head>
+<body>
+  <div id="scene" aria-label="3D city racing game"></div>
+  <div class="screen-shade" aria-hidden="true"></div>
+  <svg class="icon-definitions" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15m-6-6 6 6-6 6"/></symbol>
+    <symbol id="i-sound" viewBox="0 0 24 24"><path d="m11 4-6 5H2v6h3l6 5V4Zm4 4a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14"/></symbol>
+    <symbol id="i-fullscreen" viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24"><path d="m14 2-11 12h8l-1 8 11-12h-8l1-8Z"/></symbol>
+    <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V3m0 1c5-4 9 4 15 0v10c-6 4-10-4-15 0"/></symbol>
+    <symbol id="i-restart" viewBox="0 0 24 24"><path d="M4 10a8 8 0 1 1 1 7M4 4v6h6"/></symbol>
+  </defs></svg>
+
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="Afterglow Rush home" onclick="event.preventDefault()">
+      <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true"><path d="M21 5 5 35h9L30 5h-9Zm11 14-8 16h10l4-8-6-8Z" fill="currentColor"/></svg>
+      <span>AFTERGLOW<span class="brand-sub">MOTORSPORT DIVISION</span></span>
+    </a>
+    <div class="top-actions"><span class="live-tag"><i></i> CITY AFTER HOURS</span><button id="sound-button" class="icon-button" aria-label="Toggle sound" title="Sound · M" aria-pressed="true"><svg><use href="#i-sound"/></svg></button><button id="fullscreen-button" class="icon-button" aria-label="Toggle fullscreen" title="Fullscreen"><svg><use href="#i-fullscreen"/></svg></button></div>
+  </header>
+
+  <main id="menu" class="menu">
+    <section class="hero">
+      <div class="eyebrow"><span class="lime-line"></span> THE MIDNIGHT CIRCUIT <span class="edition">/ 01</span></div>
+      <h1><span>AFTERGLOW</span><strong>RUSH<span class="title-dot">.</span></strong></h1>
+      <p class="hero-pitch">The city is yours.<br>Leave the ordinary behind.</p>
+      <div class="hero-actions"><button id="start-button" class="button button-primary"><span>START RACE</span><svg><use href="#i-arrow"/></svg></button><button id="help-button" class="button button-link"><span class="key-icon">?</span> HOW TO DRIVE</button></div>
+      <div class="race-tags"><span><i class="tag-dot"></i> ARCADE RACING</span><span>ONE CITY. NO LIMITS.</span></div>
+    </section>
+
+    <aside class="course-card" aria-label="Race course information">
+      <div class="card-kicker"><span>TONIGHT'S RUN</span><span class="course-number">01 / 01</span></div>
+      <div class="course-heading"><div><h2>HARBOR RUN</h2><p>Chase the light. Own the night.</p></div><svg class="course-icon"><use href="#i-flag"/></svg></div>
+      <div class="course-stats"><div><span>LOCATION</span><strong>NEON HARBOR</strong></div><div><span>FORMAT</span><strong>1 LAP <i> / </i> 5 RIVALS</strong></div></div>
+      <div class="course-footer"><span class="difficulty"><i></i><i></i><i></i> ACCESSIBLE</span><span>URBAN CIRCUIT <svg><use href="#i-arrow"/></svg></span></div>
+    </aside>
+    <footer class="menu-footer"><span>BUILT FOR THE CHASE</span><span class="menu-footer-right"><span class="keyboard-mini">↔</span> KEYBOARD & TOUCH READY <i></i> ORIGINAL ARCADE EXPERIENCE</span></footer>
+  </main>
+
+  <section id="hud" class="hud" aria-label="Race status" hidden>
+    <div class="hud-top-left"><div class="position-block"><span class="metric-label">POSITION</span><div><strong id="position">6</strong><span>/ 6</span></div></div><div class="race-metrics"><div><span class="metric-label">LAP</span><strong id="lap">1 / 1</strong></div><div><span class="metric-label">CHECKPOINT</span><strong id="checkpoint">0 / 8</strong></div></div></div>
+    <div class="hud-top-center"><span class="metric-label">RACE TIME</span><strong id="timer">00:00.000</strong><div class="race-progress" aria-label="Race progress"><div id="progress-fill"></div></div></div>
+    <button id="pause-button" class="icon-button pause-button" aria-label="Pause race" title="Pause · Esc"><svg><use href="#i-pause"/></svg></button>
+    <div class="map-panel"><div class="map-label"><span>HARBOR RUN</span><i></i><span>LIVE</span></div><canvas id="minimap" width="220" height="180" aria-label="Race minimap"></canvas><div class="map-key"><span><i></i> YOU</span><span><i></i> RIVALS</span></div></div>
+    <div class="speed-panel"><div class="gear"><span>GEAR</span><strong id="gear">N</strong></div><div class="speed-readout"><strong id="speed">000</strong><span>KM/H</span></div><div class="nitro-label"><span><svg><use href="#i-bolt"/></svg> NITRO</span><kbd>SHIFT</kbd></div><div class="nitro-track"><div id="nitro-fill"></div></div><div class="damage-row"><span>BODY</span><div class="damage-track"><div id="damage-fill"></div></div></div></div>
+    <div class="hud-bottom-hint"><kbd>SPACE</kbd> DRIFT <span>·</span> <kbd>SHIFT</kbd> NITRO <span>·</span> <kbd>ESC</kbd> PAUSE</div>
+  </section>
+
+  <div id="countdown" class="countdown" aria-live="polite" hidden>3</div>
+  <div id="toast" class="toast" role="status" hidden></div>
+
+  <section id="help-panel" class="overlay" role="dialog" aria-modal="true" aria-labelledby="help-title" hidden><div class="dialog help-dialog"><button id="help-close" class="icon-button dialog-close" aria-label="Close driving instructions"><svg><use href="#i-close"/></svg></button><span class="eyebrow">GET BEHIND THE WHEEL</span><h2 id="help-title">FIND YOUR LINE.</h2><p class="dialog-intro">Easy to pick up. Impossible to slow down.</p><div class="controls-grid"><div><span class="control-keys"><kbd>W</kbd><kbd>↑</kbd></span><strong>Accelerate</strong></div><div><span class="control-keys"><kbd>S</kbd><kbd>↓</kbd></span><strong>Brake / reverse</strong></div><div><span class="control-keys"><kbd>A</kbd><kbd>D</kbd><span> / </span><kbd>←</kbd><kbd>→</kbd></span><strong>Steer</strong></div><div><span class="control-keys"><kbd>SPACE</kbd></span><strong>Handbrake / drift</strong></div><div><span class="control-keys"><kbd>SHIFT</kbd></span><strong>Nitro boost</strong></div><div><span class="control-keys"><kbd>ESC</kbd><kbd>P</kbd></span><strong>Pause</strong></div></div><div class="driving-tip"><svg><use href="#i-bolt"/></svg><p><strong>Make every corner count.</strong> Drift through turns, collect glowing nitro bottles, and take the ramps. Look for the shortcut to steal the lead.</p></div><div class="help-footer"><span><kbd>R</kbd> RESTART <span class="spaced">·</span> <kbd>M</kbd> SOUND</span><span>ON MOBILE? TOUCH CONTROLS APPEAR AUTOMATICALLY.</span></div></div></section>
+
+  <section id="pause-panel" class="overlay" role="dialog" aria-modal="true" aria-labelledby="pause-title" hidden><div class="dialog pause-dialog"><span class="eyebrow">TAKE A BREATHER</span><h2 id="pause-title">RACE PAUSED.</h2><p class="dialog-intro">The city can wait.</p><div class="stack-buttons"><button id="resume-button" class="button button-primary">RESUME RACE<svg><use href="#i-arrow"/></svg></button><button id="restart-button" class="button button-secondary">RESTART RACE<svg><use href="#i-restart"/></svg></button><button id="menu-button" class="button button-link">BACK TO GARAGE</button></div></div></section>
+
+  <section id="results" class="overlay results-overlay" role="dialog" aria-modal="true" aria-labelledby="result-title" hidden><div class="dialog results-dialog"><span class="eyebrow">HARBOR RUN / RACE COMPLETE</span><h2 id="result-title">CITY CONQUERED.</h2><p id="result-detail" class="dialog-intro">That's how you chase the light.</p><div class="result-metrics"><div><span>POSITION</span><strong id="result-position">1 / 6</strong></div><div><span>RACE TIME</span><strong id="result-time">00:00.000</strong></div><div><span>PERSONAL BEST</span><strong id="result-best">00:00.000</strong></div></div><div class="result-actions"><button id="retry-button" class="button button-primary">RACE AGAIN<svg><use href="#i-restart"/></svg></button><button id="result-menu" class="button button-secondary">BACK TO GARAGE<svg><use href="#i-arrow"/></svg></button></div></div></section>
+
+  <div id="touch-controls" class="touch-controls" aria-label="Touch driving controls" hidden><div class="touch-steer"><button data-control="left" aria-label="Steer left">◀</button><button data-control="right" aria-label="Steer right">▶</button></div><div class="touch-actions"><button data-control="drift" aria-label="Drift">DRIFT</button><button data-control="nitro" aria-label="Nitro boost" class="touch-nitro"><svg><use href="#i-bolt"/></svg></button><button data-control="brake" aria-label="Brake">BRAKE</button><button data-control="accelerate" aria-label="Accelerate" class="touch-accelerate">GO</button></div></div>
+  <script type="module" src="./game.js"></script>
+</body>
+</html>
